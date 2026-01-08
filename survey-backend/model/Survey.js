@@ -8,7 +8,7 @@ const questionSchema=new mongoose.Schema({
         required:true
     },
     label:{type:String,required:true},
-    options:[String],
+    options:{type:[String],default:[]},
     required:{type:Boolean,default:false}
 
 });
