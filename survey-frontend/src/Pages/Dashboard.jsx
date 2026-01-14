@@ -1,7 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
 export const Dashboard = () => {
+  const navigate = useNavigate();
   const [surveys, setSurveys] = useState([]);
 
   useEffect(() => {
@@ -39,7 +41,8 @@ export const Dashboard = () => {
         {surveys.map((s) => (
           <div
             key={s._id}
-            className="bg-gray-800 p-4 rounded flex justify-between"
+            onClick={() => navigate(`/builder/${s._id}`)}
+            className="bg-gray-800 p-4 rounded cursor-pointer hover:bg-gray-700 flex justify-between"
           >
             <span>{s.title}</span>
             <span className="text-sm text-gray-400">

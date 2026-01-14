@@ -1,5 +1,13 @@
-@import 'tailwindcss'; 
+@import "tailwindcss";
 
-body{
-@apply bg-gray-900 text-gray-100;  
+body {
+  @apply bg-gray-900 text-gray-100;
+}
+
+.btn {
+  @apply w-full mb-2 bg-blue-600 py-1 rounded;
+}
+
+.input {
+  @apply w-full p-2 bg-gray-700 rounded;
 }
