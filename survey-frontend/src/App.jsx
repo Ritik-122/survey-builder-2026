@@ -4,6 +4,7 @@ import { Register } from "./Pages/Register";
 import { Dashboard } from "./Pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { Builder } from "./Pages/Builder";
+import { PublicSurvey } from "./Pages/PublicSurvey";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/survey/:id" element={<PublicSurvey />} />
         </Routes>
       </BrowserRouter>
     </>

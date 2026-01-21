@@ -50,7 +50,33 @@ export const Builder = () => {
       {/* Canvas */}
       <div className="col-span-3 bg-gray-900 p-4 rounded">
         <h2 className="text-xl mb-4">{survey.title}</h2>
-
+        <button
+          onClick={async () => {
+            await api.patch(`/surveys/${id}/publish`, {
+              published: !survey.published,
+            });
+            const updated = await api.get("/surveys");
+            setSurvey(updated.data.find((s) => s._id === id));
+          }}
+          className={`mb-4 px-4 py-1rounded ${
+            survey.published ? "bg-red-600" : "bg-green-600"
+          }`}
+        >
+          {survey.published ? "Unpublish" : "Publish"}
+        </button>
+        {survey.published && (
+          <p className="text-sm text-gray-400">
+            Share link:{" "}
+            <a
+              href={`http://localhost:3000/survey/${id}`}
+              target="_blank"
+              rel="nonreferrer"
+              className="text-blue-400 underline"
+            >
+              Open Survey
+            </a>
+          </p>
+        )}
         {survey.questions?.map((q, i) => (
           <div key={i} className="bg-gray-800 p-3 rounded mb-3">
             <p className="mb-2">{q.label}</p>
