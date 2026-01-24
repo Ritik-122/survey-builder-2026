@@ -1,18 +1,28 @@
 import React, { use } from "react";
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-const navigate=useNavigate();
-  const handleLogin = async(e) => {
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-    const res=await axios.post("http://localhost:5000/api/auth/login",
-    {email,password}
-    );
-    localStorage.setItem("token",res.data.token);
-    navigate("/dashboard");
+    try {
+      const res = await axios.post("http://localhost:5000/api/auth/login", {
+        email,
+        password,
+      });
+
+      localStorage.setItem("token", res.data.token);
+      toast.success("Login successful");
+      navigate("/dashboard");
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Invalid email or password");
+    }
   };
   return (
     <>
@@ -20,7 +30,7 @@ const navigate=useNavigate();
         <form className="bg-gray-800 p-6 rounded w-80" onSubmit={handleLogin}>
           <h2 className="text-xl mb-4 text-center">Login</h2>
           <input
-          type="email"
+            type="email"
             className="w-full p-2 mb-3 bg-gray-700 rounded"
             placeholder="Email"
             onChange={(e) => setEmail(e.target.value)}
@@ -31,7 +41,14 @@ const navigate=useNavigate();
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button className="w-full bg-blue-600 p-2 rounded">Login</button>
+          <button className="w-full bg-blue-600 p-2 mb-2 rounded">Login</button>
+
+          <Link
+            to="/register"
+            className="text-sm mt-2 hover:underline block text-center"
+          >
+            New User? Register now..
+          </Link>
         </form>
       </div>
     </>

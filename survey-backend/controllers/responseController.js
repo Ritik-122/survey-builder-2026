@@ -34,7 +34,7 @@ exports.getSurveyAnalytics = async (req, res) => {
   try {
     const { surveyId } = req.params;
     const count = await Response.countDocuments({ surveyId });
-    res.json({ totlaResponses: count });
+    res.json({ totalResponses: count });
   } catch (err) {
     res.status(500).json({ message: "Failed to fetch analytics" });
   }

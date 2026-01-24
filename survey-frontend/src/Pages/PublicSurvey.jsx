@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export const PublicSurvey = () => {
   const { id } = useParams();
@@ -14,14 +15,25 @@ export const PublicSurvey = () => {
   }, [id]);
 
   const submitSurvey = async () => {
-    const formattedAnswers = Object.keys(answers).map((key) => ({
-      questionIndex: key,
-      value: answers[key],
+    try {
+      const formattedAnswers = Object.keys(answers).map((key) => ({
+        questionIndex: Number(key),
+        value: answers[key],
+      }));
+      await axios.post(`http://localhost:5000/api/responses/${id}`, {
+        answers: formattedAnswers,
+      });
+      toast.success("Survey Submitted successfully");
+      setAnswers({});
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed to submit survey");
+    }
+  };
+  const handleChange = (index, value) => {
+    setAnswers((prev) => ({
+      ...prev,
+      [index]: value,
     }));
-    await axios.post(`http://localhost:5000/api/responses/${id}`, {
-      answers: formattedAnswers,
-    });
-    alert("Response submitted");
   };
   if (!survey) return <p className="p-6">Loading...</p>;
   return (
@@ -33,7 +45,7 @@ export const PublicSurvey = () => {
           {q.type === "text" && (
             <input
               className="input"
-              onChange={(e) => setAnswers({ ...answers, [i]: e.target.value })}
+              onChange={(e) => handleChange(i, e.target.value)}
             />
           )}
           {q.type === "mcq" &&
@@ -42,19 +54,19 @@ export const PublicSurvey = () => {
                 <input
                   type="radio"
                   name={i}
-                  onChange={() => setAnswers({ ...answers, [i]: opt })}
+                  onChange={() => handleChange(i, opt)}
                 />{" "}
                 {opt}
               </label>
             ))}
-          <button
-            onClick={submitSurvey}
-            className="mt-4 bg-blue-600 px-6 py-2 rounded"
-          >
-            Submit
-          </button>
         </div>
       ))}
+      <button
+        onClick={submitSurvey}
+        className="mt-6 bg-blue-600 px-6 py-2 rounded"
+      >
+        Submit
+      </button>
     </div>
   );
 };
