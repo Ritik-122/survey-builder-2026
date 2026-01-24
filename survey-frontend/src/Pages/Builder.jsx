@@ -83,7 +83,7 @@ export const Builder = () => {
           <p className="text-sm text-gray-400 mb-4">
             Share link:{" "}
             <a
-              href={`https://survey-builder-2026.vercel.app/survey/${id}`}
+              href={`${window.location.origin}/survey/${id}`}
               target="_blank"
               rel="nonreferrer"
               className="text-blue-400 underline"
