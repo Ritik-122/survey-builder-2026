@@ -10,7 +10,7 @@ export const PublicSurvey = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/surveys/public/${id}`)
+      .get(`https://survey-builder-2026.onrender.com/api/surveys/public/${id}`)
       .then((res) => setSurvey(res.data));
   }, [id]);
 
@@ -20,7 +20,7 @@ export const PublicSurvey = () => {
         questionIndex: Number(key),
         value: answers[key],
       }));
-      await axios.post(`http://localhost:5000/api/responses/${id}`, {
+      await axios.post(`https://survey-builder-2026.onrender.com/api/responses/${id}`, {
         answers: formattedAnswers,
       });
       toast.success("Survey Submitted successfully");
