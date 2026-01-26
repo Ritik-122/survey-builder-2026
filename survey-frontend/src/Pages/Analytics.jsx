@@ -12,7 +12,7 @@ const Analytics = () => {
   const handleExport = async () => {
     try {
       setExporting(true);
-      const res = await api.get(`/export/${id}`);
+      const res = await api.get(`responses/export/${id}`);
 
       const url = res.data.downloadUrl;
       window.open(url, "_blank");
