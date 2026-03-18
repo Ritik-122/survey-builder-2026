@@ -1,6 +1,6 @@
 import React, { use } from "react";
 import { useState } from "react";
-import axios from "axios";
+import axios from "../api/axios" 
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -12,7 +12,7 @@ export const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("https://survey-builder-2026.onrender.com/api/auth/login", {
+      const res = await axios.post("/auth/login", {
         email,
         password,
       });

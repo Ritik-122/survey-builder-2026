@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../api/axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -10,7 +10,7 @@ export const PublicSurvey = () => {
 
   useEffect(() => {
     axios
-      .get(`https://survey-builder-2026.onrender.com/api/surveys/public/${id}`)
+      .get(`/surveys/public/${id}`)
       .then((res) => setSurvey(res.data));
   }, [id]);
 
@@ -20,7 +20,7 @@ export const PublicSurvey = () => {
         questionIndex: Number(key),
         value: answers[key],
       }));
-      await axios.post(`https://survey-builder-2026.onrender.com/api/responses/${id}`, {
+      await axios.post(`/responses/${id}`, {
         answers: formattedAnswers,
       });
       toast.success("Survey Submitted successfully");
